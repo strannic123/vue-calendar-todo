@@ -4,8 +4,9 @@
       <AppCalendar @currentDay="onCurrentDay"/>
     </div>
     <div class="todo">
-      <AppTodo :key="res"/>
-      {{res}}
+      <AppTodo :res="res"/>
+
+
     </div>
   </div>
 
@@ -25,12 +26,8 @@ export default {
     }
   },
   methods: {
-
     onCurrentDay(day, month, year){
       this.res = `${day} ${month} ${year}`
-
-
-
 
     },
 
@@ -43,17 +40,14 @@ export default {
 </script>
 
 <style>
-/*#app {*/
-/*  font-family: Avenir, Helvetica, Arial, sans-serif;*/
-/*  -webkit-font-smoothing: antialiased;*/
-/*  -moz-osx-font-smoothing: grayscale;*/
-/*  text-align: center;*/
-/*  color: #2c3e50;*/
-/*  margin-top: 60px;*/
-/*}*/
+
+body{
+  background: #7bc0e352;
+}
+
 .parent{
   display: flex;
-  margin: 0 auto;
+  justify-content: center;
   flex-wrap: wrap;
 }
 .calendar{

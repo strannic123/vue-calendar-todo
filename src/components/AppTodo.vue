@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <h1>NOTEBOOK</h1>
+    <div class="title">
+      <h1>Список дел</h1>
+
+      <h2>{{ saveDate }}</h2>
+
+    </div>
+
     <div class="addTask">
       <input
           class="input_task"
@@ -13,16 +19,18 @@
 
     <div class="tasks_list">
       <ul>
-        <li
-            v-for="(elem, index) of list"
-            class="task"
-            :key="index"
-        >
-      <span><span >
+        <template v-for="(elem, index) of list">
+          <li
+              v-if="elem.date == res"
+              class="task"
+              :key="index"
+          >
+      <span><span>
         <input
             @click="changeChecked(index)"
             class="checkbox"
             type="checkbox">
+
       </span>
 
 
@@ -30,19 +38,22 @@
             v-model="inputChange"
             v-if="list[index].changeItem"
             @keydown.enter="addChangeElem(index)"
-            type="text" />
+            type="text"/>
 
       <span
           v-else
           @dblclick="editItem(index)"
-          :class="{done: list[index].checked}">{{elem.title}}</span>
+          :class="{done: list[index].checked}">{{ elem.title }}</span>
 
       </span>
-          <button @click="removeEl(index)" class="delete">X</button>
-        </li>
+            <button @click="removeEl(index)" class="delete">X</button>
+          </li>
+        </template>
+
       </ul>
     </div>
-    <p v-if="(list.length === 0) ">Список задач пуст.</p>
+    <p v-if="saveDate == '' "> <b>Выберите дату-добавьте задачу</b></p>
+
 
   </div>
 </template>
@@ -50,16 +61,15 @@
 <script>
 export default {
   name: "App",
-  props: ['key'],
+  props: ['res'],
+
   data() {
     return {
       input: '',
       inputChange: '',
       list: [],
-      idElem: this.key
-
-
-
+      idElem: '',
+      dateNow: new Date().toLocaleDateString()
     }
   },
   methods: {
@@ -68,29 +78,36 @@ export default {
         checked: false,
         title: this.input,
         changeItem: false,
-        id: Math.random()
+        id: Math.random(),
+        date: this.idElem
       }
       this.list.push(el)
       this.input = ''
+      console.log(this.dateNow)
     },
+
     changeChecked(index) {
       this.list[index].checked = !this.list[index].checked
     },
+
     removeEl(index) {
       this.list.splice(index, 1)
     },
+
     editItem(index) {
       this.list[index].changeItem = true
       this.inputChange = this.list[index].title
     },
-    addChangeElem(index) {
-      this.list[this.idElem] = {
-        title: this.inputChange,
-        checked: false,
-        changeItem: false,
-        id: this.list[index].id,
 
-      }
+    addChangeElem(index) {
+      this.list[index].title = this.inputChange
+      this.list[index].changeItem = false
+    },
+  },
+
+  computed: {
+    saveDate() {
+      return this.idElem = this.res
     }
   }
 }
@@ -133,6 +150,7 @@ button {
   height: 30px;
   margin-left: 10px;
 }
+
 button:active {
   border: 3px solid lightseagreen;
 }
@@ -140,25 +158,31 @@ button:active {
 button:active, button:focus, input:active, input:focus {
   outline: none;
 }
+
 button::-moz-focus-inner {
   border: 0;
 }
+
 .delete {
   border: 1px solid red;
   width: 25px;
   height: 25px;
   background: #ed9d9d;
 }
+
 .delete:active {
   border: 3px solid crimson;
 }
+
 .done {
   color: #7d7e82;
   text-decoration: line-through;
 }
+
 .dNone {
   display: none;
 }
+
 .container {
   margin: 0 auto;
   max-width: 650px;
@@ -166,8 +190,15 @@ button::-moz-focus-inner {
   flex-direction: column;
 }
 
-.container h1{
+.container h1 {
   margin: 15px auto;
+}
+
+.container .title {
+  margin: 0 auto;
+}
+.container p{
+  text-align: center;
 }
 
 .addTask {
@@ -176,9 +207,11 @@ button::-moz-focus-inner {
   width: 100%;
   border-radius: 3px;
 }
-.tasks_list ul{
+
+.tasks_list ul {
   padding-left: 0;
 }
+
 .checkbox {
   margin-right: 10px;
 }

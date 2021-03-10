@@ -19,22 +19,11 @@
       <tr v-for="week in calendar()">
         <td
             v-for="(day, index) in week" :style="{'color': day.weekend, 'background-color': day.current}"
-            @click="$emit('currentDay', day.index, monthes[month], year)"
+            @click="$emit('currentDay', day.index, monthes[month], year) "
         > {{ day.index }} </td>
       </tr>
       </tbody>
     </table>
-<!--    <div class="format-week">-->
-<!--      <h4>Format week</h4>-->
-<!--      <div>-->
-<!--        <input type="radio" value="1" v-model="dFirstMonth" id="customRadio1" name="customRadio" class="custom-control-input">-->
-<!--        <label for="customRadio1">Monday</label>-->
-<!--      </div>-->
-<!--      <div>-->
-<!--        <input type="radio" value="0" v-model="dFirstMonth" id="customRadio2" name="customRadio" class="custom-control-input">-->
-<!--        <label for="customRadio2">Sunday</label>-->
-<!--      </div>-->
-<!--    </div>-->
 
   </div>
 </template>
@@ -84,8 +73,6 @@ export default {
 
           }
         }
-        // this.dayChange;
-        // console.log(days);
         return days;
       },
       decrease: function(){
@@ -108,15 +95,7 @@ export default {
       },
 
     },
-    computed: {
-      // dayChange: function(){
-      //   if(this.dFirstMonth == 0){
-      //     this.day = [ "Вс", "Пн", "Вт","Ср","Чт","Пт","Сб",]
-      //   }else{
-      //     this.day = ["Пн", "Вт","Ср","Чт","Пт","Сб", "Вс"]
-      //   }
-      // },
-    },
+
 
 
 }
@@ -127,8 +106,7 @@ export default {
 .table {
   border-collapse: collapse;
   float: left;
-  /*width: 180px;*/
-  /*table-layout: fixed;*/
+
 }
 .format-week {
   float:right;
