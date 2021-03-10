@@ -1,5 +1,9 @@
 # notebook
 
+# Список дел. Ежедневник на Vue 3
+
+## ![Imgur](https://i.imgur.com/FvQzmSG.gif)
+
 ## Project setup
 ```
 npm install
